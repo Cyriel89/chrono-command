@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// MODELS
+model Clock {
+  id        Int       @id @default(autoincrement()) // ID unique
+  name      String 
+  room      String
+  status    String    @default("OK") // OK, ERROR, OFF
+  timeshift Int       @default(0) // Décalage en minute pour avancer l'heure
+  createdAt DateTime  @default(now())
+}

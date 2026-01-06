@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Clock" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "room" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'OK',
+    "timeshift" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
