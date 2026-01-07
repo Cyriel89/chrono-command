@@ -1,0 +1,8 @@
+export interface Clock {
+    id: number;
+    name: string;
+    room: string;
+    status: string;
+    timeShift: number; 
+    createdAt: string;
+}

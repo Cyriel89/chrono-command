@@ -1,0 +1,8 @@
+<h2>Mes horloges</h2>
+@if (clocks$ | async; as clocks) {
+<div class="clock-container">
+    @for (clock of clocks; track clock.id) {
+        <app-clock [clock]="clock" />
+    }
+</div>
+}
