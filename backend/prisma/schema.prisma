@@ -17,6 +17,6 @@ model Clock {
   name      String 
   room      String
   status    String    @default("OK") // OK, ERROR, OFF
-  timeshift Int       @default(0) // Décalage en minute pour avancer l'heure
+  timeShift Int       @default(0) // Décalage en minute pour avancer l'heure
   createdAt DateTime  @default(now())
 }
