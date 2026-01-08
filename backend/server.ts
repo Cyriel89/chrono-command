@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
     res.send('Chrono-Command Backend is running.');
 });
 
+// Récupère les données via prisma et renvoie un JSON
 app.get('/api/clocks', async (req, res, next) => {
     try {
         const clocks = await prisma.clock.findMany();
@@ -28,3 +29,14 @@ app.get('/api/clocks', async (req, res, next) => {
     }
 });
 
+app.post('/api/clocks', async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const { name, room, timeShift, status} = req.body;
+        const result = await prisma.clock.create({ data: { name, room, timeShift, status } });
+        res.status(201).json({ message: 'Clock created', clock: result});
+    } catch (e) {
+        next(e)
+    }
+    
+});

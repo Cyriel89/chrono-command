@@ -1,0 +1,66 @@
+<div class="form-container">
+    <h3>Ajouter une horloge</h3>
+    <form (submit)="onSubmit($event)">
+        <div class="field">
+            <label for="name">Nom</label>
+            <input id="name" type="text" [field]="form.name" autocomplete="off" autofill="none" />
+            @if (form.name().touched() && form.name().invalid()) {
+                <ul class="error-list">
+                    @for (err of form.name().errors(); track $index) {
+                        <li>{{ err.message }}</li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="field">
+            <label for="room">Salle</label>
+            <input id="room" type="text" [field]="form.room" autocomplete="off" autofill="none" />
+            @if (form.room().touched() && form.room().invalid()) {
+                <ul class="error-list">
+                    @for (err of form.room().errors(); track $index) {
+                        <li>{{ err.message }}</li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="field">
+            <label for="timeShift">Décalage</label>
+            <input id="timeShift" type="number" [field]="form.timeShift" autocomplete="off" autofill="none" />
+            @if (form.timeShift().touched() && form.timeShift().invalid()) {
+                <ul class="error-list">
+                    @for (err of form.timeShift().errors(); track $index) {
+                        <li>{{ err.message }}</li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="field">
+            <label for="status">Statut</label>
+            <select id="status" [field]="form.status" autocomplete="off" autofill="none">
+                <option value="OK">OK</option>
+                <option value="ERROR">Erreur</option>
+                <option value="OFF">Off</option>
+            </select>
+            @if (form.status().touched() && form.status().invalid()) {
+                <ul class="error-list">
+                    @for (err of form.status().errors(); track $index) {
+                        <li>{{ err.message }}</li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="actions">
+            <button type="submit" [disabled]="form().invalid() || form().submitting()">
+                @if (form().submitting()) {
+                    Création...
+                } @else {
+                    Ajouter Horloge
+                }
+            </button>
+        </div>
+    </form>
+</div>

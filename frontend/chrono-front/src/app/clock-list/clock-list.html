@@ -1,3 +1,7 @@
+<app-clock-form (clockAdded)="refreshList()"/>
+
+<hr>
+
 <h2>Mes horloges</h2>
 @if (clocks$ | async; as clocks) {
 <div class="clock-container">

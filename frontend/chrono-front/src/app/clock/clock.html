@@ -1,6 +1,6 @@
 <div class="clock-card" [class]="'status-'+(clock.status | lowercase)">
     <h3>{{ clock.name | titlecase }}</h3>
-    <p>Salle : <strong>{{ clock.room }}</strong></p>
+    <p>Pays : <strong>{{ clock.room }}</strong></p>
     <p >Status : {{ clock.status }}</p>
     <p>{{ displayTime() | date: 'HH:mm:ss' }}</p>
 </div>
