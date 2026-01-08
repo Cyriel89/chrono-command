@@ -1,0 +1,14 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/prisma/dev.db:/app/prisma/dev.db
+
+  web:
+    build: ./frontend/chrono-front
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
