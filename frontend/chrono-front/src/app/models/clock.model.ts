@@ -6,4 +6,5 @@ export interface Clock {
     timeShift: number; 
     createdAt: string;
     manualOffset: number;
+    alarmInterval: number;
 }

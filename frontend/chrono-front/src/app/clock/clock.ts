@@ -16,7 +16,9 @@ export class Clock implements OnInit, OnDestroy {
   constructor(private clocksService: ClocksService) {}
 
   private timerSubscription!: Subscription;
-  public displayTime: WritableSignal<Date> = signal(new Date());
+  protected displayTime: WritableSignal<Date> = signal(new Date());
+  protected isRinging!: boolean;
+  private hasRungThisMinute!: boolean;
 
   ngOnInit(): void {
     this.displayTime.set(this.setTime());
@@ -31,7 +33,19 @@ export class Clock implements OnInit, OnDestroy {
 
   protected setTime(): Date {
     if (!this.clock) return new Date();
-    return new Date(Date.now() + Number(this.clock.timeShift * 3600 * 1000) + Number(this.clock.manualOffset * 60 * 1000));
+    const shift: number = Number(this.clock.timeShift * 3600 * 1000);
+    const offset: number = Number(this.clock.manualOffset * 60 * 1000);
+    const time: Date = new Date(Date.now() + shift + offset);
+    const minutes: number = time.getMinutes();
+    const seconds: number = time.getSeconds();
+
+    if (seconds === 0 && minutes % this.clock.alarmInterval === 0 && !this.hasRungThisMinute) {
+      this.onRing();
+      this.hasRungThisMinute = true;
+    }
+    this.hasRungThisMinute = false;
+
+    return time
   }
 
   protected onDelete(): void {
@@ -46,6 +60,21 @@ export class Clock implements OnInit, OnDestroy {
   protected onResetTime(): void {
     this.clock.manualOffset = 0;
     this.setTime();
+  }
+
+  public onRing(): void {
+    const audio = new Audio('assets/sounds/alarm.mp3');
+    audio.play()
+    this.isRinging = true;
+    setTimeout(() => {
+      this.isRinging = false;
+    }, 12000);
+  }
+
+  protected onUpdateInterval(e: any): void {
+    this.clock.alarmInterval = Number(e.target.value);
+    this.clocksService.updateClock(this.clock.id, { alarmInterval: this.clock.alarmInterval}).subscribe();
+    console.log(e.target.value);
   }
 
 }

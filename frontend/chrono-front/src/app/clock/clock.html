@@ -1,4 +1,4 @@
-<div class="clock-card" [class]="'status-'+(clock.status | lowercase)">
+<div class="clock-card" [class.shaking]="isRinging" [class]="'status-'+(clock.status | lowercase)">
     
     <button class="btn-delete" (click)="onDelete()">✕</button>
 
@@ -19,7 +19,20 @@
     }
 
     <div class="controls">
-        <button class="btn-time" (click)="onAjustTime(-60)">-1h</button>
-        <button class="btn-time" (click)="onAjustTime(15)">+15m</button> <button class="btn-time" (click)="onAjustTime(60)">+1h</button>
+        <div class="alarm-setting">
+            <label>Sonner toutes les</label>
+            <input type="number" 
+                   [value]="clock.alarmInterval" 
+                   (change)="onUpdateInterval($event)" 
+                   min="1">
+            <span class="unit">min</span>
+        </div>
+
+        <div class="buttons-row">
+            <button class="btn-time" (click)="onAjustTime(-60)">-1h</button>
+            <button class="btn-time" (click)="onAjustTime(10)">+15m</button> 
+            <button class="btn-time" (click)="onAjustTime(60)">+1h</button>
+            <button class="btn-time btn-ring" (click)="onRing()">🔔</button>
+        </div>
     </div>
 </div>

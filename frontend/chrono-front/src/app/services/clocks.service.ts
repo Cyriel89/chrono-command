@@ -22,7 +22,7 @@ export class ClocksService{
         return this.http.delete<Clock>(this.url + '/' + id);
     }
 
-    updateClock( id: number, manualOffset: Partial<Clock>): Observable<Clock> {
-        return this.http.put<Clock>(this.url + '/' + id, manualOffset);
+    updateClock( id: number, offset: Partial<Clock>): Observable<Clock> {
+        return this.http.put<Clock>(this.url + '/' + id, offset);
     }
 } 
