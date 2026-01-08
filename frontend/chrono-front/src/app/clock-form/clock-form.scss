@@ -1,0 +1,49 @@
+.form-container{
+    margin-bottom: 3rem;
+}
+h3, form{
+    margin-left: 1rem;
+}
+form{
+    display : flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.field{
+    position: relative;
+}
+input, select{
+    border: 1px solid transparent;
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+.status-ok {
+  border-left: 5px solid green;
+}
+
+.status-error {
+  border-left: 5px solid red;
+}
+
+.status-off {
+  border-left: 5px solid #565555;
+}
+.error-list {
+    color: red;
+    list-style-type: none;
+    position: absolute;
+    top: 100%;;
+    margin-top: 0;
+    font-size: 0.7rem;
+    padding-left: 3rem;
+}
+button {
+    border: 1px solid rgb(66, 175, 194);
+    background-color: lightblue;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+}

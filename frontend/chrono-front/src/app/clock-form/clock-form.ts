@@ -1,12 +1,12 @@
 import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LowerCasePipe } from '@angular/common';
 import { Field, form, required, submit } from '@angular/forms/signals';
 import { ClockFormModel } from '../models/clock-form.model';
 import { ClockFormService } from '../services/clock-form.service';
 
 @Component({
   selector: 'app-clock-form',
-  imports: [CommonModule, Field],
+  imports: [CommonModule, Field, LowerCasePipe],
   templateUrl: './clock-form.html',
   styleUrl: './clock-form.scss',
 })
