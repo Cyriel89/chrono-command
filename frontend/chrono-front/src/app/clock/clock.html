@@ -3,4 +3,5 @@
     <p>Pays : <strong>{{ clock.room }}</strong></p>
     <p >Status : {{ clock.status }}</p>
     <p>{{ displayTime() | date: 'HH:mm:ss' }}</p>
+    <div><button (click)="onDelete()">🗑️</button></div>
 </div>

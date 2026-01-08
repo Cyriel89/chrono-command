@@ -14,7 +14,18 @@ export class ClockList {
   private clocksService = inject(ClocksService);
   clocks$ = this.clocksService.getClocks();
 
-  protected refreshList() {
+  protected refreshList(): void {
     this.clocks$ = this.clocksService.getClocks();
+  }
+
+  protected onDeleteClock(e: Event) {
+    return this.clocksService.deleteClock(Number(e)).subscribe({
+      next: () => {
+        this.refreshList();
+      },
+      error: (err: Error) => {
+        console.error('Error deleting clock:', err);
+      }
+    });
   }
 }

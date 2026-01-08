@@ -11,6 +11,16 @@
     font-weight: 300;
     font-size: 16px;
   }
+  div{
+    text-align: end;
+  }
+  div button{
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 30%;
+    font-size: 12px;
+    cursor: pointer;
+  }
 }
 
 .status-ok {

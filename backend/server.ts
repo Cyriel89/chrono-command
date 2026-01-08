@@ -31,7 +31,6 @@ app.get('/api/clocks', async (req, res, next) => {
 
 app.post('/api/clocks', async (req, res, next) => {
     try {
-        console.log(req.body);
         const { name, room, timeShift, status} = req.body;
         const result = await prisma.clock.create({ data: { name, room, timeShift, status } });
         res.status(201).json({ message: 'Clock created', clock: result});
@@ -39,4 +38,15 @@ app.post('/api/clocks', async (req, res, next) => {
         next(e)
     }
     
+});
+
+app.delete('/api/clocks/:id', async (req, res, next) => {
+    try {
+        console.log('delete receive', req.params)
+        const { id } = req.params;
+        const result = await prisma.clock.delete({ where: { id: Number(id) } });
+        res.json(result)
+    } catch (e) {
+        next(e)
+    }
 });
