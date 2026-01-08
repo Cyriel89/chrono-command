@@ -11,7 +11,7 @@ app.use(express.json()); // Pour lire le JSON dans les requêtes
 
 // Démarrage
 app.listen(port, () => {
-    console.log('Server is running on localhost, port'+port)
+    console.log('Server is running on localhost, port'+port);
 });
 
 // Route de test
@@ -25,7 +25,7 @@ app.get('/api/clocks', async (req, res, next) => {
         const clocks = await prisma.clock.findMany();
         res.json(clocks);
     } catch (e) {
-        next(e)
+        next(e);
     }
 });
 
@@ -35,18 +35,27 @@ app.post('/api/clocks', async (req, res, next) => {
         const result = await prisma.clock.create({ data: { name, room, timeShift, status } });
         res.status(201).json({ message: 'Clock created', clock: result});
     } catch (e) {
-        next(e)
+        next(e);
     }
     
 });
 
+app.put('/api/clocks/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await prisma.clock.update({ where: { id: Number(id) }, data: req.body });
+        res.json(result);
+    } catch (e) {
+        next(e);
+    }
+});
+
 app.delete('/api/clocks/:id', async (req, res, next) => {
     try {
-        console.log('delete receive', req.params)
         const { id } = req.params;
         const result = await prisma.clock.delete({ where: { id: Number(id) } });
-        res.json(result)
+        res.json(result);
     } catch (e) {
-        next(e)
+        next(e);
     }
 });

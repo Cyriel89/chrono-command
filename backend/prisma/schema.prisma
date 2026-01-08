@@ -13,10 +13,11 @@ datasource db {
 
 // MODELS
 model Clock {
-  id        Int       @id @default(autoincrement()) // ID unique
-  name      String 
-  room      String
-  status    String    @default("OK") // OK, ERROR, OFF
-  timeShift Int       @default(0) // Décalage en minute pour avancer l'heure
-  createdAt DateTime  @default(now())
+  id            Int       @id @default(autoincrement()) // ID unique
+  name          String 
+  room          String
+  status        String    @default("OK") // OK, ERROR, OFF
+  timeShift     Int       @default(0) // Décalage en heures pour avancer l'heure
+  createdAt     DateTime  @default(now())
+  manualOffset  Int       @default(0) // Décalage en heures ajouté par l'utilisateur
 }

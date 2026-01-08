@@ -5,4 +5,5 @@ export interface Clock {
     status: string;
     timeShift: number; 
     createdAt: string;
+    manualOffset: number;
 }

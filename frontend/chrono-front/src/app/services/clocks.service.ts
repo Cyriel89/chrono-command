@@ -14,11 +14,15 @@ export class ClocksService{
         return this.http.get<Clock[]>(this.url)
     }
 
-    addClock(clock: Omit<Clock, 'id | createdAt'>): Observable<Clock> {
+    addClock(clock: Omit<Clock, 'id | createdAt | manualOffset'>): Observable<Clock> {
         return this.http.post<Clock>(this.url, clock)
     }
 
     deleteClock( id: number): Observable<Clock> {
         return this.http.delete<Clock>(this.url + '/' + id);
+    }
+
+    updateClock( id: number, manualOffset: Partial<Clock>): Observable<Clock> {
+        return this.http.put<Clock>(this.url + '/' + id, manualOffset);
     }
 } 

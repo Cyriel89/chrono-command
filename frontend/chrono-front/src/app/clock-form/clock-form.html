@@ -1,66 +1,59 @@
 <div class="form-container">
-    <h3>Ajouter une horloge</h3>
-    <form (submit)="onSubmit($event)">
+    <h3>Nouvelle Horloge</h3>
+    
+    <form (submit)="onSubmit($event)" class="toolbar">
+        
         <div class="field">
-            <label for="name">Nom : </label>
-            <input id="name" type="text" [field]="form.name" autocomplete="off" autofill="none" />
+            <label for="name">Nom</label>
+            <input id="name" type="text" [field]="form.name" placeholder="Ex: Tokyo" autocomplete="off" />
+            
             @if (form.name().touched() && form.name().invalid()) {
-                <ul class="error-list">
-                    @for (err of form.name().errors(); track $index) {
-                        <li>{{ err.message }}</li>
-                    }
-                </ul>
+                <div class="error-tooltip">
+                    @for (err of form.name().errors(); track $index) { <span>{{ err.message }}</span> }
+                </div>
             }
         </div>
 
         <div class="field">
-            <label for="room">Pays : </label>
-            <input id="room" type="text" [field]="form.room" autocomplete="off" autofill="none" />
+            <label for="room">Pays / Salle</label>
+            <input id="room" type="text" [field]="form.room" placeholder="Ex: Japon" autocomplete="off" />
+            
             @if (form.room().touched() && form.room().invalid()) {
-                <ul class="error-list">
-                    @for (err of form.room().errors(); track $index) {
-                        <li>{{ err.message }}</li>
-                    }
-                </ul>
+                <div class="error-tooltip">
+                    @for (err of form.room().errors(); track $index) { <span>{{ err.message }}</span> }
+                </div>
             }
         </div>
 
-        <div class="field">
-            <label for="timeShift">Décalage : </label>
-            <input id="timeShift" type="number" [field]="form.timeShift" autocomplete="off" autofill="none" />
+        <div class="field small-field">
+            <label for="timeShift">Décalage (H)</label>
+            <input id="timeShift" type="number" [field]="form.timeShift" placeholder="0" />
+            
             @if (form.timeShift().touched() && form.timeShift().invalid()) {
-                <ul class="error-list">
-                    @for (err of form.timeShift().errors(); track $index) {
-                        <li>{{ err.message }}</li>
-                    }
-                </ul>
+                <div class="error-tooltip">
+                    @for (err of form.timeShift().errors(); track $index) { <span>{{ err.message }}</span> }
+                </div>
             }
         </div>
 
         <div class="field">
-            <label for="status">Statut : </label>
-            <select [class]="'status-'+(form.status().value()) | lowercase" id="status" [field]="form.status" autocomplete="off" autofill="none">
-                <option value="OK">OK</option>
-                <option value="ERROR">Erreur</option>
-                <option value="OFF">Off</option>
+            <label for="status">Statut</label>
+            <select id="status" [field]="form.status" [class]="'status-' + (form.status().value() | lowercase)">
+                <option value="OK">🟢 OK</option>
+                <option value="ERROR">🔴 Erreur</option>
+                <option value="OFF">⚪ Off</option>
             </select>
-            @if (form.status().touched() && form.status().invalid()) {
-                <ul class="error-list">
-                    @for (err of form.status().errors(); track $index) {
-                        <li>{{ err.message }}</li>
-                    }
-                </ul>
-            }
         </div>
 
         <div class="actions">
             <button type="submit" [disabled]="form().invalid() || form().submitting()">
                 @if (form().submitting()) {
-                    Création...
+                    Wait...
                 } @else {
-                    Ajouter Horloge
+                    <span>+</span> Ajouter
                 }
             </button>
         </div>
+
     </form>
 </div>

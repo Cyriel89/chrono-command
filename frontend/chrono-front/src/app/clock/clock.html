@@ -1,7 +1,25 @@
 <div class="clock-card" [class]="'status-'+(clock.status | lowercase)">
-    <h3>{{ clock.name | titlecase }}</h3>
-    <p>Pays : <strong>{{ clock.room }}</strong></p>
-    <p >Status : {{ clock.status }}</p>
-    <p>{{ displayTime() | date: 'HH:mm:ss' }}</p>
-    <div><button (click)="onDelete()">🗑️</button></div>
+    
+    <button class="btn-delete" (click)="onDelete()">✕</button>
+
+    <div class="card-header">
+        <h3>{{ clock.name | titlecase }}</h3>
+        <span class="room-badge">{{ clock.room }}</span>
+    </div>
+
+    <div class="time-display">
+        {{ displayTime() | date: 'HH:mm:ss' }}
+    </div>
+
+    @if (clock.manualOffset != 0) {
+        <div class="offset-badge">
+            Décalage : {{ clock.manualOffset > 0 ? '+' : ''}}{{ clock.manualOffset / 60 }}h
+            <button class="btn-reset" (click)="onResetTime()" title="Réinitialiser">⟳</button>
+        </div>
+    }
+
+    <div class="controls">
+        <button class="btn-time" (click)="onAjustTime(-60)">-1h</button>
+        <button class="btn-time" (click)="onAjustTime(15)">+15m</button> <button class="btn-time" (click)="onAjustTime(60)">+1h</button>
+    </div>
 </div>

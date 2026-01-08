@@ -29,11 +29,23 @@ export class Clock implements OnInit, OnDestroy {
     this.timerSubscription.unsubscribe();
   }
 
-  setTime(): Date {
-    return new Date(new Date().getTime() + (this.clock.timeShift*60*1000));
+  protected setTime(): Date {
+    if (!this.clock) return new Date();
+    return new Date(Date.now() + Number(this.clock.timeShift * 3600 * 1000) + Number(this.clock.manualOffset * 60 * 1000));
   }
 
-  onDelete(): void {
+  protected onDelete(): void {
     this.clockDeleted.emit(this.clock.id);
   }
+
+  protected onAjustTime(delta: number): void {
+    this.clock.manualOffset += delta;
+    this.setTime();
+  }
+
+  protected onResetTime(): void {
+    this.clock.manualOffset = 0;
+    this.setTime();
+  }
+
 }
