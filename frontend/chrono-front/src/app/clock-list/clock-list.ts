@@ -1,25 +1,46 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ClocksService } from '../services/clocks.service';
-import { AsyncPipe } from '@angular/common';
+import { ClockModel} from '../models/clock.model';
 import { Clock } from '../clock/clock';
 import { ClockForm } from '../clock-form/clock-form';
+import { WebSocketService } from '../services/web-socket.service';
 
 @Component({
   selector: 'app-clock-list',
-  imports: [AsyncPipe, Clock, ClockForm],
+  imports: [Clock, ClockForm],
   templateUrl: './clock-list.html',
   styleUrl: './clock-list.scss',
 })
-export class ClockList {
+export class ClockList implements OnInit {
   private clocksService = inject(ClocksService);
-  clocks$ = this.clocksService.getClocks();
+  private webSocketService = inject(WebSocketService);
+  protected clocks = signal<ClockModel[]>([]);
 
-  protected refreshList(): void {
-    this.clocks$ = this.clocksService.getClocks();
+  ngOnInit(): void {
+  
+    this.refreshList();
+
+    this.webSocketService.listen('clock-updated').subscribe((updatedClock: any) => {
+      this.clocks.update((currentClocks) => {
+        return currentClocks.map((clock) => {
+          if (clock.id === updatedClock.id) {
+            return updatedClock;
+          }
+          return clock;
+        });
+      });
+      
+    });
   }
 
-  protected onDeleteClock(e: Event) {
-    return this.clocksService.deleteClock(Number(e)).subscribe({
+  protected refreshList(): void {
+    this.clocksService.getClocks().subscribe((data) => {
+      this.clocks.set(data);
+    });
+  }
+
+  protected onDeleteClock(id: any) {
+    this.clocksService.deleteClock(Number(id)).subscribe({
       next: () => {
         this.refreshList();
       },

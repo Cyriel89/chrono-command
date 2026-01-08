@@ -1,6 +1,6 @@
 import { DatePipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal } from '@angular/core';
-import { Clock as ClockModel } from '../models/clock.model';
+import { ClockModel as ClockModel } from '../models/clock.model';
 import { interval, Subscription } from 'rxjs';
 import { ClocksService } from '../services/clocks.service';
 @Component({
@@ -54,11 +54,13 @@ export class Clock implements OnInit, OnDestroy {
 
   protected onAjustTime(delta: number): void {
     this.clock.manualOffset += delta;
+    this.clocksService.updateClock(this.clock.id, { manualOffset: this.clock.manualOffset }).subscribe();
     this.setTime();
   }
 
   protected onResetTime(): void {
     this.clock.manualOffset = 0;
+    this.clocksService.updateClock(this.clock.id, { manualOffset: this.clock.manualOffset }).subscribe();
     this.setTime();
   }
 

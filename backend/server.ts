@@ -1,18 +1,30 @@
 import express from 'express';
 import cors from 'cors';
 import { prisma } from './lib/prisma';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 const app = express();
 const port = 3000;
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "http://localhost:4200",
+    }
+});
 
 // Middleware
 app.use(cors()); // Autorise tout le monde (dev)
 app.use(express.json()); // Pour lire le JSON dans les requêtes
 
 // Démarrage
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log('Server is running on localhost, port'+port);
 });
+
+io.on('connection', (socket) => {
+    console.log(`un client est connecté ${socket.id}`);
+})
 
 // Route de test
 app.get('/', (req, res) => {
@@ -40,21 +52,21 @@ app.post('/api/clocks', async (req, res, next) => {
     
 });
 
-app.put('/api/clocks/:id', async (req, res, next) => {
+app.delete('/api/clocks/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const result = await prisma.clock.update({ where: { id: Number(id) }, data: req.body });
+        const result = await prisma.clock.delete({ where: { id: Number(id) } });
         res.json(result);
     } catch (e) {
         next(e);
     }
 });
 
-app.delete('/api/clocks/:id', async (req, res, next) => {
+app.put('/api/clocks/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const result = await prisma.clock.delete({ where: { id: Number(id) } });
-        res.json(result);
+        const result = await prisma.clock.update({ where: { id: Number(id) }, data: req.body });
+        io.emit('clock-updated', result);
     } catch (e) {
         next(e);
     }

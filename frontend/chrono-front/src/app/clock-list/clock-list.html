@@ -3,10 +3,11 @@
 <hr>
 
 <h2>Mes horloges</h2>
-@if (clocks$ | async; as clocks) {
+
 <div class="clock-container">
-    @for (clock of clocks; track clock.id) {
+    @for (clock of clocks(); track clock.id) {
         <app-clock (clockDeleted)="onDeleteClock($event)" [clock]="clock" />
+    } @empty {
+        <p>Aucune horloge disponible</p>
     }
 </div>
-}

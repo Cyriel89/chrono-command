@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Clock } from "../models/clock.model";
+import { ClockModel } from "../models/clock.model";
 import { Observable, Subscription } from "rxjs";
 
 @Injectable({
@@ -10,19 +10,19 @@ export class ClocksService{
     private http = inject(HttpClient);
     readonly url = 'http://localhost:3000/api/clocks';
 
-    getClocks(): Observable<Clock[]> {
-        return this.http.get<Clock[]>(this.url)
+    getClocks(): Observable<ClockModel[]> {
+        return this.http.get<ClockModel[]>(this.url)
     }
 
-    addClock(clock: Omit<Clock, 'id | createdAt | manualOffset'>): Observable<Clock> {
-        return this.http.post<Clock>(this.url, clock)
+    addClock(clock: Omit<ClockModel, 'id | createdAt | manualOffset'>): Observable<ClockModel> {
+        return this.http.post<ClockModel>(this.url, clock)
     }
 
-    deleteClock( id: number): Observable<Clock> {
-        return this.http.delete<Clock>(this.url + '/' + id);
+    deleteClock( id: number): Observable<ClockModel> {
+        return this.http.delete<ClockModel>(this.url + '/' + id);
     }
 
-    updateClock( id: number, offset: Partial<Clock>): Observable<Clock> {
-        return this.http.put<Clock>(this.url + '/' + id, offset);
+    updateClock( id: number, offset: Partial<ClockModel>): Observable<ClockModel> {
+        return this.http.put<ClockModel>(this.url + '/' + id, offset);
     }
 } 

@@ -1,4 +1,4 @@
-export interface Clock {
+export interface ClockModel {
     id: number;
     name: string;
     room: string;

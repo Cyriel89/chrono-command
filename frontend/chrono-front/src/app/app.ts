@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './header/header';
+import { WebSocketService } from './services/web-socket.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class App implements OnInit{
   protected readonly title = signal('chrono-front');
   private removeListener!: () => void;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private webSocketService: WebSocketService) {}
 
   ngOnInit(): void {
     this.removeListener = this.renderer.listen('document', 'click', () => {
